@@ -6,8 +6,9 @@ import { AuthContext } from "../../context";
 import { Link } from "react-router-dom";
 import { setDoc, getDoc, doc, collection, updateDoc, serverTimestamp } from "firebase/firestore";
 
+
 import Nav from "../components/Nav";
-import { Input } from "postcss";
+
 
 
 const moodButtons = [
@@ -18,8 +19,7 @@ const moodButtons = [
   { label: "Angry", color: "#FF0000" },
   { label: "Excited", color: "#FF1493" },
   { label: "Anxious", color: "#800080" },
-  { label: "Annoyed", color: "#FFFF00" },
-  { label: "other", color: "#FFFF00" }
+  { label: "Annoyed", color: "#FFFF00" }
 
 ];
 
@@ -28,7 +28,7 @@ const Mood = () => {
   const [activeIndex, setActiveIndex] = useState(null)
   const [isActive, setIsActive] = useState(false)
   const { mood,setMood } = useContext(AuthContext)
-  const {otherMood, setOtherMood} = useState(false)
+
   
   const bgColor = (index, activeMood) => {
       setMood(activeMood)
@@ -50,7 +50,7 @@ const Mood = () => {
       const docSnapshot = await getDoc(dailyDataRef);
       const time = new Date().toLocaleTimeString()
 
-      if (docSnapshot.exists()) {
+      if (docSnapshot.exists() && docSnapshot.data().posts) {
         const existingData = docSnapshot.data();
         const updatedMoods = [...existingData.moods, { mood, time }];
   
@@ -79,6 +79,7 @@ const Mood = () => {
   }, [mood, today]);
 
 
+
   return (
     <>
     <Nav/>
@@ -95,7 +96,7 @@ const Mood = () => {
       <div className="mt-20 md:mt-0 grid grid-rows-3 grid-cols-3 gap-y-5 gap-x-2">
       {moodButtons.map((moodButton, index) => (
           <button className={activeIndex === index && isActive? `mood ${active}` : `mood bg-gray-100`}
-          onClick={() => index === moodButtons.length-1 ? setOtherMood(!otherMood) : bgColor(index, moodButton.label)}
+          onClick={() => bgColor(index, moodButton.label)}
           key={index}
          >
           {moodButton.label}
@@ -104,12 +105,10 @@ const Mood = () => {
       </div> 
       </div>
 
-      <div>
-      {otherMood && <input type="text"></input>}
-      </div>
 
     <div className="flex justify-center">
-      <button className=" pr-4 py-2 w-[75%] md:w-[85%] lg:w-[55%] text-white font-bold text-lg bg-[#89c6a9] mt-12 rounded-xl"
+
+      <button className=" pr-4 py-2 w-[75%] md:w-[85%] lg:w-[55%] text-white font-bold text-lg bg-[#89c6a9] mt-4 md:m-12 rounded-xl"
       id="saveMoodBtn"
       >
       <Link to="/dairy" className="flex text-center items-center justify-end gap-16 md:gap-28">Continue <AiOutlineRight/></Link>

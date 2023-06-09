@@ -53,10 +53,12 @@ const AuthProvider = ({children}) => {
   const [dashboard, setDashboard] = useState(false)
   const [mood, setMood] = useState("")
   const [moodColor, setMoodColor] = useState("")
+  const [moodOfTheDay, setMoodOfTheDay] = useState("")
+  const [allMoodOfDay, setAllMoodOfDay] = useState([])
 
 
   return(
-    <AuthContext.Provider value={{state, dispatch, dashboard, setDashboard, mood, setMood, moodColor, setMoodColor}}>
+    <AuthContext.Provider value={{state, dispatch, dashboard, setDashboard, mood, setMood, moodColor, setMoodColor, moodOfTheDay, setMoodOfTheDay, allMoodOfDay, setAllMoodOfDay}}>
         {children}
     </AuthContext.Provider>
   )

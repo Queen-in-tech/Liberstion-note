@@ -5,7 +5,13 @@
       "./src/**/*.{js,ts,jsx,tsx}",
     ],
     theme: {
-      extend: {},
+      extend: {
+        colors: {
+          dGreen : "#6bb390",
+          dYellow : "#ffff76",
+          dBlue : "#292b4c"
+        }
+      },
     },
     plugins: [],
   }
