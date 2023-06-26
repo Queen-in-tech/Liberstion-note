@@ -7,7 +7,7 @@ import { getDocs, getDoc, collection, query, onSnapshot, orderBy } from "firebas
 import { useState, useEffect, useContext } from 'react';
 
 import Timeago from "react-timeago";
-import { setDayOfYear } from "date-fns";
+import buildFormatter from 'react-timeago/lib/formatters/buildFormatter';
 import { AuthContext } from "../../context";
 
 const OthersActivities = () => {
@@ -15,6 +15,27 @@ const OthersActivities = () => {
   const [userIds, setUserIds] = useState([])
   const [userDetails, setUserDetails] = useState()
   const {likePost, postLikedBy, setPostsData, postsData, postLikedObj, setPostLikedBy} = useContext(AuthContext)
+
+  const formatter = buildFormatter({
+    prefixAgo: '',
+    prefixFromNow: '',
+    suffixAgo: '',
+    suffixFromNow: '',
+    second: '1s',
+    seconds: '%ds',
+    minute: '1m',
+    minutes: '%dm',
+    hour: '1h',
+    hours: '%dh',
+    day: '1d',
+    days: '%dd',
+    week: '1w',
+    weeks: '%dw',
+    month: '1mo',
+    months: '%dmo',
+    year: '1y',
+    years: '%dy',
+  });
 
   useEffect( () => {
     const getUsersPosts = async () => {
@@ -77,12 +98,12 @@ const OthersActivities = () => {
 }, [user, ])
 
   return (
-    <div className='p-5  flex flex-col gap-3'> 
+    <div className='p-5 flex flex-col gap-3'> 
     {
       postsData.sort((a, b) => b.time - a.time).map((post, index) => {
         const postUser = userDetails && userDetails[post?.uid];
 
-        return post.privacySettings === "Everyone" && <div className=" bg-white p-4 text-gray-500 text-sm rounded-xl shrink-0" key={post.id}>
+        return post.privacySettings === "Everyone" && <div className="flex flex-col md:block bg-white px-2 py-4 md:p-4 text-gray-500 text-sm rounded-xl md:shrink-0" key={post.id}>
         <div className="flex gap-2 pb-5">
         {userDetails && postUser.photoURL ? <img src={postUser.photoURL} alt="user dp" className='w-10 h-10 rounded-full bg-white' /> : <CgProfile className="w-8 h-8 rounded-xl mr-1"></CgProfile>} 
         
@@ -93,22 +114,25 @@ const OthersActivities = () => {
           {userDetails && post.uid && postUser.username}
         </p> 
         <span className="text-[13px]">
-          <Timeago date={new Date(post.time?.toDate()).toLocaleString()}/>
+          <Timeago date={new Date(post.time?.toDate()).toLocaleString()} formatter={formatter}/>
         </span>
         </div>
-        <div className="text-lg items-center">
+        <div className="hidden md:block text-lg items-center">
         <BsThreeDots/> 
       </div>
       </div>
 
-        <p className="leading-7 max-w-[500px] ">{post.postText}</p>
+        <p className="leading-7 md:max-w-[500px] ">{post.postText}</p>
 
-        <div className="grid grid-cols-2 gap-2 min-w-[500px] w-[500px] ">
+        <div className="grid grid-cols-2 gap-2  md:min-w-[500px] md:w-[500px] ">
       {post.postImage && post.postImage.map((url, index) => (
         <img src={url} key={index} className="object-cover pt-1 rounded-xl"/>
       )) } 
         </div>
         
+      </div>
+      <div className="md:hidden text-lg items-center">
+        <BsThreeDots/> 
       </div>
       </div>
         <div className="px-10">

@@ -6,7 +6,6 @@ import OthersActivities from "./OthersActivities"
 const Activities = () => {
   const [toLoadALL, setToLoadAll] = useState(false)
   const [toLoadYours, setToLoadYours] = useState(false)
-  const [active, setActive] = useState(false)
 
   const allPostStyle = toLoadALL && "border-b-4 border-b-dGreen"
   const yourPostStyle = toLoadYours && "border-b-4 border-b-dGreen"

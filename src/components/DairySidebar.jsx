@@ -20,19 +20,19 @@ const DairySidebar = () => {
     const activeClass = openCalender ? "border-[#ffff76] border-l-[6px] shadow-xl" : ""
    
   return (
-    <div className={`flex flex-col gap-1 h-[97vh] bg-[#292b4c] py-6 my-2 ml-2 rounded-xl md:min-w-[15vw] z-20 sticky top-3 ${openCalenderClass}`}>
+    <div className={`flex flex-col gap-1 h-[100vh] md:h-[97vh] bg-[#292b4c] py-6 md:my-2 md:ml-2 rounded-r-xl md:rounded-xl md:min-w-[15vw] z-20 sticky top-0 md:top-3 ${openCalenderClass}`}>
     <p className={`hidden md:block text-white text-2xl px-3 font-bold ${openCalender? "mb-4" : "mb-8"}`}>Liberation Notes</p>
 
     <Link 
     to="/dairy" 
-    className={`p-3 text-white font-light flex gap-2 items-center  hover:shadow-xl ${location.pathname === "/dairy" && openCalender === false ? "border-[#ffff76] border-l-[6px] shadow-xl ": ""} `}
+    className={`p-3 text-white font-light flex gap-2 items-center  hover:shadow-xl ${location.pathname === "/dairy" && openCalender === false ? "border-[#ffff76] border-l-[6px] shadow-xl ": ""} ${activeClass} `}
     onClick={() => setOpenCalender(false)}>
        <AiOutlineHome className="text-xl"/>
        <span className="hidden md:block">Home</span>
        </Link> 
     
     <div 
-    className= {`text-white p-3 font-light flex gap-2 items-center cursor-pointer hover:shadow-xl ${activeClass}`}
+    className= {`text-white p-3 font-light flex gap-2 items-center cursor-pointer hover:shadow-xl`}
     onClick={() => setOpenCalender(!openCalender)}>
        <AiOutlineCalendar className="text-xl "/>
        <span className="text-white hidden md:block">Calender</span>

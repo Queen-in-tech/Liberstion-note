@@ -26,7 +26,7 @@ const Home = () => {
       <img src="undraw-people.svg" alt="" className='w-full h-[60vh] object-center'  />
       </div>
       <div className='flex justify-center pt-8'>
-      <button className='py-4 w-[90%] border-2 bg-[#292b4c] text-white rounded-2xl'>
+      <button className='py-4 w-[90%] border-2 bg-[#292b4c] text-white rounded-2xl outline-none'>
       {user? <Link to="/mood">Start writting</Link> : <Link to="/signin">Get started</Link>}</button>
       </div>
       {user? <p onClick= { () => signOut(auth)}  className='text-center mt-1 text-[#292b4c] font-bold text-[1rem]'> sign out </p> : <p  className='text-center mt-1 text-[#292b4c] font-medium text-[1rem]'>Already have an account? <Link to="/login" className='font-extrabold'> Log in </Link> </p> }
