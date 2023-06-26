@@ -95,7 +95,10 @@ const Signin = () => {
       console.error('Error creating user document:', error);
     });
     }}
-    user.displayName && createUsersDoc()
+    
+    if (user && user.displayName) {
+      createUsersDoc();
+    }
   }, [user])
 
   return (

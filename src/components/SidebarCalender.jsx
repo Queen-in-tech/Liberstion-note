@@ -41,7 +41,9 @@ const SidebarCalender = () => {
         return (
             <div className="emoji">{emoji}</div>
         );
-      } else return
+      } else return (
+        <div className="emoji"></div>
+      )
     }
 
     return null;

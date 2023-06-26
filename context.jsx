@@ -1,5 +1,10 @@
 import { useReducer, createContext } from "react";
-import { useState } from "react";
+import { getDocs, getDoc, collection, query, onSnapshot, doc, setDoc, updateDoc, deleteDoc, collectionGroup, where } from "firebase/firestore";
+import { useState, useEffect, useContext } from 'react';
+import { auth, db } from "./src/utils/firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
+
+
 
 const AuthContext = createContext();
 
@@ -55,10 +60,132 @@ const AuthProvider = ({children}) => {
   const [moodColor, setMoodColor] = useState("")
   const [moodOfTheDay, setMoodOfTheDay] = useState("")
   const [allMoodOfDay, setAllMoodOfDay] = useState([])
+  const [postLikedBy, setPostLikedBy] = useState([])
+  const [allPostLiked, setAllPostLiked] = useState([])
+  const [postLikedObj, setPostLikedObj] = useState([])
+  const [postsData, setPostsData] = useState([])
+  const [user, loading] = useAuthState(auth)
 
+
+  useEffect(() => {
+    const getPostLikedByUser = async () => {
+      const likesQuery = query(
+        collection(db, "users", user.uid, "dailyData")
+      );
+    
+      const querySnapshot = await getDocs(likesQuery);
+      
+      const likedPostsPromises = querySnapshot.docs.map( (doc) => {
+        const likeQuery = query(
+          collection(db, "users", user.uid, "dailyData", doc.id, "likes")
+        );
+    
+        return getDocs(likeQuery)
+         
+      });
+      const likedPosts = []
+    
+      const likedPostsSnapshots = await Promise.all(likedPostsPromises);
+       likedPostsSnapshots.map((snapshot) => snapshot.docs.map((doc) => likedPosts.push(doc.id)));
+      setPostLikedBy(likedPosts);
+    }
+  
+    if(user?.uid){
+    getPostLikedByUser()
+    }
+    
+  }, [user?.uid])
+  
+  useEffect(() => {
+    const getAllPostLiked = async () => {
+      const allLikes = query(collectionGroup(db, 'likes'))
+      const querySnapshot = await getDocs(allLikes);
+      const likesCount = []
+      querySnapshot.forEach((doc) => {
+        const likedData = doc.id
+        likesCount.push(likedData)
+        setAllPostLiked(likesCount)
+      });}
+  
+      getAllPostLiked()
+  
+      const unsubscribe = onSnapshot(
+        query(collectionGroup(db, 'likes')),
+        (snapshot) => {
+          getAllPostLiked();
+        }
+      );
+    
+      return () => {
+        unsubscribe();
+      };
+  
+  }, [])
+  
+    const checkPostLikes = () => {
+      const count = []
+     const postLikes = postsData.map(post => {
+      const initCount = allPostLiked.filter((likedId) => likedId === post.id).length;
+  
+  
+      return { id: post.id, initCount };
+      }) 
+  
+      count.push(...postLikes)
+      setPostLikedObj(count)
+    }
+  
+    useEffect(() => {
+    checkPostLikes()
+  
+    const unsubscribe = onSnapshot(
+      query(collectionGroup(db, 'likes')),
+      (snapshot) => {
+        checkPostLikes();
+      }
+    );
+  
+    return () => {
+      unsubscribe();
+    }
+  
+    }, [allPostLiked, postsData])
+  
+    const likePost = async (post) => {
+      const today = new Date(post.time.toDate())
+      const username = user.displayName
+      const displayPhoto = user.photoURL
+      const revToday = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`
+      const dailyDataRef = doc(collection(db, "users", user.uid, "dailyData",  revToday, "likes"), post.id)
+      const docSnapshot = await getDoc(dailyDataRef)
+      if(!postLikedBy.includes(post.id)){ 
+        try{
+        
+        if (docSnapshot.exists()) {
+          const existingData = docSnapshot.data();
+          const existingLikes = existingData.likes || []
+          const updatedLikes = [...existingLikes, { username, displayPhoto}];
+    
+          await updateDoc(dailyDataRef, { likedPosts: updatedLikes })
+        } else {
+          const data = [{
+            username,
+            displayPhoto
+           }]
+            await setDoc(dailyDataRef, {likedPosts: data})
+         }
+       
+      } catch (error) {
+        console.error('Error saving daily data:', error);
+      }
+    } else {
+      const docRef = doc(db, "users", user.uid, "dailyData", revToday, "likes", post.id)
+      await deleteDoc(docRef)
+      }
+    } 
 
   return(
-    <AuthContext.Provider value={{state, dispatch, dashboard, setDashboard, mood, setMood, moodColor, setMoodColor, moodOfTheDay, setMoodOfTheDay, allMoodOfDay, setAllMoodOfDay}}>
+    <AuthContext.Provider value={{state, dispatch, dashboard, setDashboard, mood, setMood, moodColor, setMoodColor, moodOfTheDay, setMoodOfTheDay, allMoodOfDay, setAllMoodOfDay, likePost, allPostLiked, postLikedBy, setPostLikedBy, postLikedObj, setPostsData, postsData}}>
         {children}
     </AuthContext.Provider>
   )

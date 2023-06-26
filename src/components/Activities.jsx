@@ -17,16 +17,17 @@ const Activities = () => {
 
   return (
     <React.Fragment >
-      <div className="w-[60%]">
+      <div className="w-[84vw] md:w-[60%] relative">
       <MakeAPost/>
-      <div className='border-b-[0.2px] border-dGreen mt-5 px-3 pt-3 mx-5 text-gray-500'>
+      <p className="pt-7 text-2xl text-dBlue font-bold text-center md:hidden">Liberation Notes</p>
+      <div className='border-b-[0.2px] border-dGreen mt-5 px-3 md:pt-3 mx-3.5 mr-1 text-gray-500 sticky bg-gray-100 z-40 md:top-20'>
       <div className="flex justify-around">
-        <p className={`hover:bg-gray-200 rounded-t-xl py-3 px-24 ${allPostStyle}`}
+        <p className={`hover:bg-gray-200 rounded-t-xl py-3 px-3 md:px-24 ${allPostStyle} cursor-pointer`}
         onClick={() => { 
           setToLoadYours(false)
           setToLoadAll(true)
         }}>All Posts</p>
-        <p className={`hover:bg-gray-200 rounded-t-xl py-3 px-24 ${yourPostStyle}`}
+        <p className={`hover:bg-gray-200 rounded-t-xl py-3 px-3 md:px-24 ${yourPostStyle} cursor-pointer`}
         onClick={() => { 
           setToLoadYours(true)
           setToLoadAll(false)
@@ -36,7 +37,6 @@ const Activities = () => {
       {toLoadYours && <ForYouActivities/>}
       {toLoadALL && <OthersActivities/>}
       </div>
-
     <div>
      
     </div>

@@ -50,9 +50,10 @@ const Mood = () => {
       const docSnapshot = await getDoc(dailyDataRef);
       const time = new Date().toLocaleTimeString()
 
-      if (docSnapshot.exists() && docSnapshot.data().posts) {
+      if (docSnapshot.exists()) {
         const existingData = docSnapshot.data();
-        const updatedMoods = [...existingData.moods, { mood, time }];
+        const existingMoods = existingData.moods || []
+        const updatedMoods = [...existingMoods, { mood, time }];
   
         await updateDoc(dailyDataRef, { moods: updatedMoods });
       } else {
