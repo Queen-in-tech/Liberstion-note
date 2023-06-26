@@ -107,7 +107,7 @@ const OthersActivities = () => {
         <div className="flex gap-2 pb-5">
         {userDetails && postUser.photoURL ? <img src={postUser.photoURL} alt="user dp" className='w-10 h-10 rounded-full bg-white' /> : <CgProfile className="w-8 h-8 rounded-xl mr-1"></CgProfile>} 
         
-        <div className="mt-1">
+        <div className="mt-1 w-full">
         <div className=" flex justify-between">
         <div className="flex gap-2 mb-2 items-center">
         <p className="font-bold capitalize">
@@ -117,22 +117,19 @@ const OthersActivities = () => {
           <Timeago date={new Date(post.time?.toDate()).toLocaleString()} formatter={formatter}/>
         </span>
         </div>
-        <div className="hidden md:block text-lg items-center">
+        <div className="text-lg flex justify-end md:items-center">
         <BsThreeDots/> 
       </div>
       </div>
 
-        <p className="leading-7 md:max-w-[500px] ">{post.postText}</p>
+        <p className="leading-7 w-full md:max-w-[500px] ">{post.postText}</p>
 
-        <div className="grid grid-cols-2 gap-2  md:min-w-[500px] md:w-[500px] ">
+        <div className="grid grid-cols-2 gap-2 w-full md:min-w-[500px] md:w-[500px] ">
       {post.postImage && post.postImage.map((url, index) => (
         <img src={url} key={index} className="object-cover pt-1 rounded-xl"/>
       )) } 
         </div>
         
-      </div>
-      <div className="md:hidden text-lg items-center">
-        <BsThreeDots/> 
       </div>
       </div>
         <div className="px-10">

@@ -27,14 +27,14 @@ const DairySidebar = () => {
     to="/dairy" 
     className={`p-3 text-white font-light flex gap-2 items-center  hover:shadow-xl ${location.pathname === "/dairy" && openCalender === false ? "border-[#ffff76] border-l-[6px] shadow-xl ": ""} ${activeClass} `}
     onClick={() => setOpenCalender(false)}>
-       <AiOutlineHome className="text-xl"/>
+       <AiOutlineHome className="text-2xl md:text-xl"/>
        <span className="hidden md:block">Home</span>
        </Link> 
     
     <div 
     className= {`text-white p-3 font-light flex gap-2 items-center cursor-pointer hover:shadow-xl`}
     onClick={() => setOpenCalender(!openCalender)}>
-       <AiOutlineCalendar className="text-xl "/>
+       <AiOutlineCalendar className="text-2xl md:text-xl "/>
        <span className="text-white hidden md:block">Calender</span>
        </div>
 
@@ -43,23 +43,23 @@ const DairySidebar = () => {
      </div>
 
        <Link className={`p-3 text-white font-light flex gap-2 items-center  hover:shadow-xl ${location.pathname === "/dashboard" ? "border-[#ffff76] border-l-[6px] shadow-xl": ""} `}>
-       <IoMdSpeedometer className="text-xl "/>
+       <IoMdSpeedometer className="text-2xl md:text-xl"/>
        <span className="hidden md:block">Dashboard</span>
        </Link> 
 
        <Link className={`p-3 text-white font-light flex gap-2 items-center  hover:shadow-xl ${location.pathname === "/dashboard" ? "border-[#ffff76] border-l-[6px] shadow-xl": ""} `}>
-       <MdOutlineDeveloperBoard className="text-xl "/>
+       <MdOutlineDeveloperBoard className="text-2xl md:text-xl"/>
        <span className="hidden md:block">Moodboard</span>
        </Link> 
 
        <Link className={`p-3 text-white font-light flex gap-2 items-center  hover:shadow-xl ${location.pathname === "/explore" ? "border-[#ffff76] border-l-[6px] shadow-xl": ""} `}>
-       <MdOutlineExplore className="text-xl"/>
+       <MdOutlineExplore className="text-2xl md:text-xl"/>
        <span className="hidden md:block">Explore</span>
        </Link> 
 
        <button className={`p-3 text-white font-light flex gap-2 items-center  hover:shadow-xl ${location.pathname === "/explore" ? "border-[#ffff76] border-l-[6px] shadow-xl": ""} ` } onClick={() => {
         signOut(auth)}}>
-       <MdOutlineExplore className="text-xl"/>
+       <MdOutlineExplore className="text-2xl md:text-xl"/>
        <span className="hidden md:block">Sign out</span>
        </button> 
 
