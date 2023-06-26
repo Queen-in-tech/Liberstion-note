@@ -15,7 +15,7 @@ import  Picker  from "@emoji-mart/react";
 
 
 const MakeAPost = () => {
-    const {moodOfTheDay} = useContext(AuthContext)
+    const {moodOfTheDay, setMakePostMobile} = useContext(AuthContext)
   const [user, loading] = useAuthState(auth)
     const navigate = useNavigate()
     const [postText, setPostText] = useState("")
@@ -146,16 +146,21 @@ const MakeAPost = () => {
         }, [postText, today]);
    
   return (
-    <div className="hidden md:block">
-    <div className="mx-10 bg-white rounded-xl relative">
-        <div className="pt-4 border-b-dGreen border-b-[1.5px] rounded-b-xl">
+    <div className="">
+    <div className="mx-3 md:mx-10 bg-white rounded-xl relative">
+        <div className="pt-4 md:border-b-dGreen border-b-[1.5px] rounded-b-xl">
 
-            <div className="min-h-[80px] h-auto">
+          <div className="flex justify-between px-2 pt-2 pb-4 md:hidden">
+            <p className="text-dBlue" onClick={() => setMakePostMobile(false)}>Cancel</p>
+            <button className={`bg-dGreen px-5 py-1 md:hidden text-white text-sm rounded-2xl ${postText.length > 300 && "bg-[#94f7c8] cursor-not-allowed"}`} id="savePostBtn">Post</button>
+          </div>
+
+            <div className="md:min-h-[80px] h-auto">
             {!postText && <span className="absolute text-gray-400 pointer-events-none p-5">Why are you feeling {moodOfTheDay} today?</span>}
             
             <div contentEditable="true" 
             spellCheck="true" 
-            className="outline-none mt-[-12px] p-5 break-words text-gray-700" 
+            className="outline-none mt-[-12px] pb-20 pt-5 px-5 md:p-5 break-words text-gray-700" 
             ref={textRef}
             onInput={handleInput}
             ></div>
@@ -185,7 +190,7 @@ const MakeAPost = () => {
                 }</p>
                 <VscSmiley className="text-2xl cursor-pointer text-dGreen" onClick={() => setShowEmoji(!showEmoji)}/>
                 <BiImageAdd className="text-2xl cursor-pointer text-dGreen" onClick={() => imgRef.current.click()}/>
-                <button className={`bg-dGreen px-5 py-1 text-white text-sm rounded-2xl ${postText.length > 300 && "bg-[#94f7c8] cursor-not-allowed"}`} id="savePostBtn">Post</button>
+                <button className={`bg-dGreen px-5 py-1 hidden md:block text-white text-sm rounded-2xl ${postText.length > 300 && "bg-[#94f7c8] cursor-not-allowed"}`} id="savePostBtn">Post</button>
             </div>
             </div>
             </div>

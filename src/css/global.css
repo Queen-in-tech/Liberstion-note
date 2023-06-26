@@ -183,5 +183,5 @@ a{
 
 
 .mood{
-    @apply py-2 px-4 text-center text-xl text-[#292b4c] capitalize rounded-2xl border-[#292b4c] mr-2;
+    @apply py-2 px-2 sm:px-3 md:px-4 text-center text-xl text-[#292b4c] capitalize rounded-2xl border-[#292b4c] mr-2;
 }

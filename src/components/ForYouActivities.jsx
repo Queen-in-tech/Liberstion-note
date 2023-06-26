@@ -8,12 +8,34 @@ import {AiOutlineHeart, AiFillHeart} from "react-icons/ai"
 
 
 import Timeago from "react-timeago";
+import buildFormatter from 'react-timeago/lib/formatters/buildFormatter';
 import { AuthContext } from "../../context";
 
 
 const ForYouActivities = () => {
   const [user, loading] = useAuthState(auth)
   const {likePost, postLikedBy, setPostsData, postsData, setPostLikedBy, postLikedObj} = useContext(AuthContext)
+
+  const formatter = buildFormatter({
+    prefixAgo: '',
+    prefixFromNow: '',
+    suffixAgo: '',
+    suffixFromNow: '',
+    second: '1s',
+    seconds: '%ds',
+    minute: '1m',
+    minutes: '%dm',
+    hour: '1h',
+    hours: '%dh',
+    day: '1d',
+    days: '%dd',
+    week: '1w',
+    weeks: '%dw',
+    month: '1mo',
+    months: '%dmo',
+    year: '1y',
+    years: '%dy',
+  });
 
 
   useEffect( () => {
@@ -66,17 +88,19 @@ const ForYouActivities = () => {
           <div className="flex gap-2">
         {user.photoURL ? <img src={user.photoURL} alt="user dp" className='w-8 h-8 rounded-full bg-white' /> : <CgProfile className="w-8 h-8 rounded-xl mr-1"></CgProfile>} 
         
-        <div className="mt-1">
-          <div className="flex justify-between">
+        <div className="mt-1 w-full">
+        <div className=" flex justify-between">
         <div className="flex gap-2 mb-2 items-center">
-        <p className="font-bold capitalize">{user.displayName}</p> 
-        <span>
-        <Timeago date={new Date(post.time?.toDate()).toLocaleString()}/>
-        </span> 
+        <p className="font-bold capitalize">
+          {user.displayName}
+        </p> 
+        <span className="text-[13px]">
+          <Timeago date={new Date(post.time?.toDate()).toLocaleString()} formatter={formatter}/>
+        </span>
         </div>
-        <div className="text-lg">
-        <BsThreeDots/>
-      </div> 
+        <div className="text-lg flex justify-end md:items-center">
+        <BsThreeDots/> 
+      </div>
       </div>
 
       <p className="leading-7 md:max-w-[500px]">{post.postText}</p>

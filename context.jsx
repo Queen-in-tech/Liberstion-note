@@ -65,6 +65,7 @@ const AuthProvider = ({children}) => {
   const [postLikedObj, setPostLikedObj] = useState([])
   const [postsData, setPostsData] = useState([])
   const [user, loading] = useAuthState(auth)
+  const [makePostMobile, setMakePostMobile] = useState(false)
 
 
   useEffect(() => {
@@ -185,7 +186,7 @@ const AuthProvider = ({children}) => {
     } 
 
   return(
-    <AuthContext.Provider value={{state, dispatch, dashboard, setDashboard, mood, setMood, moodColor, setMoodColor, moodOfTheDay, setMoodOfTheDay, allMoodOfDay, setAllMoodOfDay, likePost, allPostLiked, postLikedBy, setPostLikedBy, postLikedObj, setPostsData, postsData}}>
+    <AuthContext.Provider value={{state, dispatch, dashboard, setDashboard, mood, setMood, moodColor, setMoodColor, moodOfTheDay, setMoodOfTheDay, allMoodOfDay, setAllMoodOfDay, likePost, allPostLiked, postLikedBy, setPostLikedBy, postLikedObj, setPostsData, postsData, makePostMobile, setMakePostMobile}}>
         {children}
     </AuthContext.Provider>
   )

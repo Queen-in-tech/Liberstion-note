@@ -103,7 +103,7 @@ const OthersActivities = () => {
       postsData.sort((a, b) => b.time - a.time).map((post, index) => {
         const postUser = userDetails && userDetails[post?.uid];
 
-        return post.privacySettings === "Everyone" && <div className="flex flex-col md:block bg-white px-2 py-4 md:p-4 text-gray-500 text-sm rounded-xl md:shrink-0" key={post.id}>
+        return post.privacySettings === "Everyone" && <div className="flex flex-col md:block bg-white p-4 text-gray-500 text-sm rounded-xl md:shrink-0" key={post.id}>
         <div className="flex gap-2 pb-5">
         {userDetails && postUser.photoURL ? <img src={postUser.photoURL} alt="user dp" className='w-10 h-10 rounded-full bg-white' /> : <CgProfile className="w-8 h-8 rounded-xl mr-1"></CgProfile>} 
         

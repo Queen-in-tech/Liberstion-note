@@ -87,7 +87,7 @@ const Mood = () => {
     <div className="flex flex-col md:flex-row justify-center items-center mt-10 md:items-start md:mt-28 h-screen  px-10 md:justify-between md:gap-20">
       <div className="flex flex-col justify-center items-center  md:w-[50vw]">
       <img src="undraw-smiley-face.svg" alt="" className="shrink-0 w-[80%] sm:w-[60%] md:w-[100%] lg:w-[80%]" />
-      <img src="blob-egg.svg" alt="" className="absolute -z-10 top-10 ml-10 md:w-[700px] md:top-36 lg:top-32"/>
+      <img src="blob-egg.svg" alt="" className="absolute -z-10 top-44 ml-10 md:w-[700px] md:top-36 lg:top-32"/>
       <p className=" md:hidden text-xl text-center lg:text-center mt-2 font-semibold text-[#292b4c] lg:text-2xl">How are you feeling today, <br /> {user.displayName}?</p>
       </div>
 

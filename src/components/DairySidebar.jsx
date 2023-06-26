@@ -4,6 +4,7 @@ import {IoMdSpeedometer} from "react-icons/io"
 import {MdOutlineExplore, MdOutlineDeveloperBoard} from "react-icons/md"
 import {AiOutlineCalendar} from "react-icons/ai"
 import {AiOutlineHome} from "react-icons/ai"
+import {BiExit} from "react-icons/bi"
 import { Link, useLocation } from "react-router-dom"
 import { signOut } from "firebase/auth";
 import { auth } from "../utils/firebase";
@@ -59,7 +60,7 @@ const DairySidebar = () => {
 
        <button className={`p-3 text-white font-light flex gap-2 items-center  hover:shadow-xl ${location.pathname === "/explore" ? "border-[#ffff76] border-l-[6px] shadow-xl": ""} ` } onClick={() => {
         signOut(auth)}}>
-       <MdOutlineExplore className="text-2xl md:text-xl"/>
+       <BiExit className="text-2xl md:text-xl"/>
        <span className="hidden md:block">Sign out</span>
        </button> 
 
