@@ -139,7 +139,7 @@ const editPost = async (post, index) => {
     if (dailyData && dailyData.posts) {
         const updatedPosts = dailyData.posts.map((eachPost) => {
           if (eachPost.id === post.id) {
-          return { ...eachPost, postText: newText };
+          return { ...eachPost, postText: newText, edited:"edited" };
           }
           return eachPost;
         });
@@ -227,15 +227,17 @@ const editPost = async (post, index) => {
 
       </div>
       <div className="px-10">
-        <div className="py-1 text-xl flex cursor-pointer gap-1" onClick={() => {
-          likePost(post, index)}}>
+        <div className="py-2 text-xl flex cursor-pointer gap-1" >
           {postLikedBy.includes(post.id) ? (<AiFillHeart className="text-red-700" onClick={() =>{
+          likePost(post, index)
           setPostLikedBy(postLikedBy.filter(id => id !== post.id))
         }}/>) : (<AiOutlineHeart onClick={() => {
+          likePost(post, index)
           setPostLikedBy([...postLikedBy, post.id])
           }}/>)
         }
          {<p className="text-xs text-red-700">{postLikedObj.find(like => like.id === post.id)?.initCount}</p>}
+         <p className="text-[14px] ml-3">{post.edited && post.edited}</p>
         </div>
         </div>
       </div>
