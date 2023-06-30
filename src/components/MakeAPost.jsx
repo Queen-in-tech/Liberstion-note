@@ -96,7 +96,6 @@ const MakeAPost = () => {
 
     const today = new Date()
 
-    useEffect(()=> {
         const saveDailyData = async() => {
             try{
             const revToday = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`
@@ -135,15 +134,6 @@ const MakeAPost = () => {
           }
          
 
-          const button = document.getElementById('savePostBtn');
-          button.addEventListener('click', handleClick);
-      
-          return () => {
-            button.removeEventListener('click', handleClick);
-          };
-      
-      
-        }, [postText, today]);
    
   return (
     <div className="">
@@ -152,7 +142,7 @@ const MakeAPost = () => {
 
           <div className="flex justify-between px-2 pt-2 pb-4 md:hidden">
             <p className="text-dBlue" onClick={() => setMakePostMobile(false)}>Cancel</p>
-            <button className={`bg-dGreen px-5 py-1 md:hidden text-white text-sm rounded-2xl ${postText.length > 300 && "bg-[#94f7c8] cursor-not-allowed"}`} id="savePostBtn">Post</button>
+            <button className={`bg-dGreen px-5 py-1 md:hidden text-white text-sm rounded-2xl ${postText.length > 300 && "bg-[#94f7c8] cursor-not-allowed"}`} onClick={handleClick}>Post</button>
           </div>
 
             <div className="md:min-h-[80px] h-auto">
@@ -190,7 +180,7 @@ const MakeAPost = () => {
                 }</p>
                 <VscSmiley className="text-2xl cursor-pointer text-dGreen" onClick={() => setShowEmoji(!showEmoji)}/>
                 <BiImageAdd className="text-2xl cursor-pointer text-dGreen" onClick={() => imgRef.current.click()}/>
-                <button className={`bg-dGreen px-5 py-1 hidden md:block text-white text-sm rounded-2xl ${postText.length > 300 && "bg-[#94f7c8] cursor-not-allowed"}`} id="savePostBtn">Post</button>
+                <button className={`bg-dGreen px-5 py-1 hidden md:block text-white text-sm rounded-2xl ${postText.length > 300 && "bg-[#94f7c8] cursor-not-allowed"}`}onClick={handleClick}>Post</button>
             </div>
             </div>
             </div>

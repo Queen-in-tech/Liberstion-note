@@ -4,6 +4,7 @@ import {IoMdSpeedometer} from "react-icons/io"
 import {MdOutlineExplore, MdOutlineDeveloperBoard} from "react-icons/md"
 import {AiOutlineCalendar} from "react-icons/ai"
 import {AiOutlineHome} from "react-icons/ai"
+import {AiOutlineMessage, AiOutlineSearch, AiOutlineBell} from "react-icons/ai"
 import {BiExit} from "react-icons/bi"
 import { Link, useLocation } from "react-router-dom"
 import { signOut } from "firebase/auth";
@@ -33,11 +34,19 @@ const DairySidebar = () => {
        </Link> 
     
     <div 
-    className= {`text-white p-3 font-light flex gap-2 items-center cursor-pointer hover:shadow-xl`}
+    className= {`text-white p-3 font-light gap-2 items-center cursor-pointer hover:shadow-xl hidden md:flex`}
     onClick={() => setOpenCalender(!openCalender)}>
        <AiOutlineCalendar className="text-2xl md:text-xl "/>
        <span className="text-white hidden md:block">Calender</span>
        </div>
+
+       <Link className={`p-3 text-white font-light flex gap-2 items-center  hover:shadow-xl ${location.pathname === "/dashboard" ? "border-[#ffff76] border-l-[6px] shadow-xl": ""} md:hidden`}>
+       <AiOutlineMessage className="text-2xl md:text-xl"/>
+       </Link> 
+
+       <Link className={`p-3 text-white font-light flex gap-2 items-center  hover:shadow-xl ${location.pathname === "/dashboard" ? "border-[#ffff76] border-l-[6px] shadow-xl": ""} md:hidden `}>
+       <AiOutlineBell className="text-2xl md:text-xl"/>
+       </Link> 
 
       <div className="hidden md:block">
      {openCalender && <SidebarCalender/>}
