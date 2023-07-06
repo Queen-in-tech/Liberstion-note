@@ -4,7 +4,7 @@ import {IoMdSpeedometer} from "react-icons/io"
 import {MdOutlineExplore, MdOutlineDeveloperBoard} from "react-icons/md"
 import {AiOutlineCalendar} from "react-icons/ai"
 import {AiOutlineHome} from "react-icons/ai"
-import {AiOutlineMessage, AiOutlineSearch, AiOutlineBell} from "react-icons/ai"
+import {AiOutlineMail, AiOutlineBell} from "react-icons/ai"
 import {BiExit} from "react-icons/bi"
 import { Link, useLocation } from "react-router-dom"
 import { signOut } from "firebase/auth";
@@ -13,10 +13,9 @@ import { auth } from "../utils/firebase";
 
 
 const DairySidebar = () => {
-    const [openCalender, setOpenCalender] = useState(true)
-
+    const [openCalender, setOpenCalender] = useState(false)
+    
     const location = useLocation();
-
 
     const openCalenderClass = openCalender ? "w-[auto]" : "w-[20.4vw]"
     const activeClass = openCalender ? "border-[#ffff76] border-l-[6px] shadow-xl" : ""
@@ -41,7 +40,7 @@ const DairySidebar = () => {
        </div>
 
        <Link className={`p-3 text-white font-light flex gap-2 items-center  hover:shadow-xl ${location.pathname === "/dashboard" ? "border-[#ffff76] border-l-[6px] shadow-xl": ""} md:hidden`}>
-       <AiOutlineMessage className="text-2xl md:text-xl"/>
+       <AiOutlineMail className="text-2xl md:text-xl"/>
        </Link> 
 
        <Link className={`p-3 text-white font-light flex gap-2 items-center  hover:shadow-xl ${location.pathname === "/dashboard" ? "border-[#ffff76] border-l-[6px] shadow-xl": ""} md:hidden `}>
@@ -52,12 +51,12 @@ const DairySidebar = () => {
      {openCalender && <SidebarCalender/>}
      </div>
 
-       <Link className={`p-3 text-white font-light flex gap-2 items-center  hover:shadow-xl ${location.pathname === "/dashboard" ? "border-[#ffff76] border-l-[6px] shadow-xl": ""} `}>
+       <Link to="/dashboard" className={`p-3 text-white font-light flex gap-2 items-center  hover:shadow-xl ${location.pathname === "/dashboard" ? "border-[#ffff76] border-l-[6px] shadow-xl": ""} `}>
        <IoMdSpeedometer className="text-2xl md:text-xl"/>
        <span className="hidden md:block">Dashboard</span>
        </Link> 
 
-       <Link className={`p-3 text-white font-light flex gap-2 items-center  hover:shadow-xl ${location.pathname === "/dashboard" ? "border-[#ffff76] border-l-[6px] shadow-xl": ""} `}>
+       <Link className={`p-3 text-white font-light flex gap-2 items-center  hover:shadow-xl ${location.pathname === "/moodboard" ? "border-[#ffff76] border-l-[6px] shadow-xl": ""} `}>
        <MdOutlineDeveloperBoard className="text-2xl md:text-xl"/>
        <span className="hidden md:block">Moodboard</span>
        </Link> 

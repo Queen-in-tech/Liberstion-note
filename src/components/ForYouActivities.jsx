@@ -20,7 +20,7 @@ import { AuthContext } from "../../context";
 
 const ForYouActivities = () => {
   const [user, loading] = useAuthState(auth)
-  const {likePost, postLikedBy, setPostsData, postsData, setPostLikedBy, postLikedObj} = useContext(AuthContext)
+  const {likePost, postLikedBy, setPostsData, postsData, setPostLikedBy, postLikedObj, handleOpenComment, getCommentLength} = useContext(AuthContext)
   const [editBox, setEditBox] = useState([])
   const [newText, setNewText] = useState("")
   const [showEmoji, setShowEmoji] = useState(false)
@@ -227,7 +227,8 @@ const editPost = async (post, index) => {
 
       </div>
       <div className="px-10">
-        <div className="py-2 text-xl flex cursor-pointer gap-1" >
+        <div className="pt-6 text-xl flex cursor-pointer gap-3" >
+          <div className="flex">
           {postLikedBy.includes(post.id) ? (<AiFillHeart className="text-red-700" onClick={() =>{
           likePost(post, index)
           setPostLikedBy(postLikedBy.filter(id => id !== post.id))
@@ -236,8 +237,9 @@ const editPost = async (post, index) => {
           setPostLikedBy([...postLikedBy, post.id])
           }}/>)
         }
-         {<p className="text-xs text-red-700">{postLikedObj.find(like => like.id === post.id)?.initCount}</p>}
-         <p className="text-[14px] ml-3">{post.edited && post.edited}</p>
+         <p className="text-xs text-red-700">{postLikedObj.find(like => like.id === post.id)?.initCount}</p></div>
+         <p className="text-sm font-semibold text-dBlue" onClick={() => handleOpenComment(index, post)}>Comments <span className="text-xs text-start font-normal">{getCommentLength(post.id)}</span></p>
+         <p className="text-sm">{post.edited && post.edited}</p>
         </div>
         </div>
       </div>

@@ -6,7 +6,7 @@ import {AiOutlineHeart, AiFillHeart, AiOutlineMail} from "react-icons/ai"
 import {GrEdit} from "react-icons/gr"
 import {MdDeleteOutline} from "react-icons/md"
 import {VscSmiley} from "react-icons/vsc"
-import { getDocs, getDoc, collection, query, onSnapshot, orderBy, doc, updateDoc } from "firebase/firestore";
+import { getDocs, getDoc, collection, query, onSnapshot, orderBy, doc, updateDoc, collectionGroup } from "firebase/firestore";
 import { useState, useEffect, useContext } from 'react';
 
 import Timeago from "react-timeago";
@@ -17,7 +17,7 @@ const OthersActivities = () => {
   const [user, loading] = useAuthState(auth)
   const [userIds, setUserIds] = useState([])
   const [userDetails, setUserDetails] = useState()
-  const {likePost, postLikedBy, setPostsData, postsData, postLikedObj, setPostLikedBy} = useContext(AuthContext)
+  const {likePost, postLikedBy, setPostsData, postsData, postLikedObj, setPostLikedBy, handleOpenComment, getCommentLength} = useContext(AuthContext)
   const [editBox, setEditBox] = useState([])
   const [newText, setNewText] = useState("")
   const [postOptions, setPostOptions] = useState(-1);
@@ -120,6 +120,10 @@ const OthersActivities = () => {
     
 }, [user, ])
 
+
+
+
+
 const deletePost = async (post) => {
   const today = new Date(post.time.toDate())
   const revToday = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`
@@ -188,15 +192,15 @@ const editPost = async (post, index) => {
       </div>
       </div>
 
-        <p className="leading-7 w-full md:max-w-[500px] ">{post.postText}</p>
+      <p className="leading-7 w-full md:max-w-[500px] ">{post.postText}</p>
 
-        <div className="grid grid-cols-2 gap-2 w-full md:min-w-[500px] md:w-[500px] ">
+      <div className="grid grid-cols-2 gap-2 w-full md:min-w-[500px] md:w-[500px]">
       {post.postImage && post.postImage.map((url, index) => (
-        <img src={url} key={index} className="object-cover pt-1 rounded-xl"/>
+      <img src={url} key={index} className="object-cover pt-1 rounded-xl"/>
       )) } 
-        </div>
+      </div>
 
-        {postOptions === index && <div className="absolute top-10 right-0 bg-white shadow-md p-4 flex flex-col gap-3 rounded-xl z-20 ">
+      {postOptions === index && <div className="absolute top-10 right-0 bg-white shadow-md p-4 flex flex-col gap-3 rounded-xl z-20">
       {user.uid === post.uid && <div className="text-dGreen font-bold flex justify-between items-center gap-2" onClick={() => openEditBox(index)}>
         <p> Edit post </p>
         <GrEdit/>
@@ -235,16 +239,19 @@ const editPost = async (post, index) => {
       </div>
       </div>
         <div className="px-10">
-        <div className="py-1 text-xl flex cursor-pointer gap-1" onClick={() => {
-          likePost(post, index)}}>
+        <div className="py-1 text-xl flex cursor-pointer gap-3">
+          <div className="flex">
           {postLikedBy.includes(post.id) ? (<AiFillHeart className="text-red-700" onClick={() =>{
+            likePost(post, index)
           setPostLikedBy(postLikedBy.filter(id => id !== post.id))
         }}/>) : (<AiOutlineHeart onClick={() => {
+          likePost(post, index)
           setPostLikedBy([...postLikedBy, post.id])
           }}/>)
         }
-         {<p className="text-xs text-red-700">{postLikedObj.find(like => like.id === post.id)?.initCount}</p>}
-         <p className="text-[14px] ml-3">{post.edited && post.edited}</p>
+         <p className="text-xs text-red-700">{postLikedObj.find(like => like.id === post.id)?.initCount}</p></div>
+         <p className="text-sm font-semibold text-dBlue cursor-pointer" onClick={() => handleOpenComment(index, post)}>Comments <span className="text-xs text-start font-normal">{getCommentLength(post.id)}</span></p>
+         <p className="text-sm ">{post.edited && post.edited}</p>
         </div>
         </div>
       </div>   

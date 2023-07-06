@@ -5,7 +5,7 @@ import React from "react";
 
 const DairyBody = () => {
   return (
-    <div className='w-full'>
+    <div className='w-full relative'>
          <div className="flex md:gap-5 w-full relative">
           <React.Fragment>
           <Activities/>

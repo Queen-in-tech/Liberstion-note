@@ -7,22 +7,25 @@ import { VscColorMode } from 'react-icons/vsc';
 import { ImExit } from 'react-icons/im';
 import { signOut } from "firebase/auth";
 import { AuthContext } from "../../context";
+import DairySidebar from "../components/DairySidebar";
+import { CgProfile } from "react-icons/cg";
 
 
 
 const Dashboard = () => {
   const [user, loading] = useAuthState(auth)
-  const { dashboard, setDashboard } = useContext(AuthContext)
+  // const { dashboard, setDashboard } = useContext(AuthContext)
 
-  useEffect(() => {
-    if(dashboard){
-      setDashboard(false)
-    }
-  }, [])
+  // useEffect(() => {
+  //   if(dashboard){
+  //     setDashboard(false)
+  //   }
+  // }, [])
 
   return (
   <div className='flex gap-10'>
-      <div className='py-6 px-6 h-screen border-r-2 border-red ml-20 flex flex-col gap-4 text-lg text-red-800'>
+    <DairySidebar />
+      {/* <div className='py-6 px-6 h-screen border-r-2 border-red ml-20 flex flex-col gap-4 text-lg text-red-800'>
       <Link to="/dashboard">
         <div className="flex gap-4 items-center mt-5 cursor-pointer">
             <AiFillEdit className="w-6 h-6 ml-1"/>
@@ -40,9 +43,11 @@ const Dashboard = () => {
             <ImExit className="w-6 h-6 ml-1"/>
             <p className="text-[16px]">Log out</p>
         </div>
-      </div>
+      </div> */}
 
-      <div className="flex flex-col gap-5">
+      <div className="flex flex-col gap-5 py-12 ">
+        { user.photoURL ? <img src={user.photoURL} alt="user dp" className='w-56 h-56 cursor-pointer rounded-full'/> : <CgProfile className="w-56 h-56 relative cursor-pointer "></CgProfile>}
+        <div>
         <div className="shadow-md py-3 px-4 mt-5">
           <p className="">Username</p>
           <span className="mt-2 ml-2">{user.displayName}</span>
@@ -61,6 +66,7 @@ const Dashboard = () => {
         <div className="shadow-md py-3 px-4">
           <p className="">Phone number</p>
           <span className="mt-2 ml-2">{user.phoneNumber ? user.phoneNumber : "Null"}</span>
+        </div>
         </div>
       </div>
     </div>
