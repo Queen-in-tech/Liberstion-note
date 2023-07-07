@@ -39,11 +39,11 @@ const DairySidebar = () => {
        <span className="text-white hidden md:block">Calender</span>
        </div>
 
-       <Link className={`p-3 text-white font-light flex gap-2 items-center  hover:shadow-xl ${location.pathname === "/dashboard" ? "border-[#ffff76] border-l-[6px] shadow-xl": ""} md:hidden`}>
+       <Link className={`p-3 text-white font-light flex gap-2 items-center  hover:shadow-xl ${location.pathname === "" ? "border-[#ffff76] border-l-[6px] shadow-xl": ""} md:hidden`}>
        <AiOutlineMail className="text-2xl md:text-xl"/>
        </Link> 
 
-       <Link className={`p-3 text-white font-light flex gap-2 items-center  hover:shadow-xl ${location.pathname === "/dashboard" ? "border-[#ffff76] border-l-[6px] shadow-xl": ""} md:hidden `}>
+       <Link className={`p-3 text-white font-light flex gap-2 items-center  hover:shadow-xl ${location.pathname === "" ? "border-[#ffff76] border-l-[6px] shadow-xl": ""} md:hidden `}>
        <AiOutlineBell className="text-2xl md:text-xl"/>
        </Link> 
 

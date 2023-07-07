@@ -37,8 +37,6 @@ const MakeAPost = () => {
           const storageRef = ref(storage, "post-images/" + file.name);
           await uploadBytes(storageRef, file);
           const imageUrl = await getDownloadURL(storageRef);
-
-          console.log(imageUrl)
    
           setImgUrl((prevImageUrl) => [...prevImageUrl, imageUrl])
         }

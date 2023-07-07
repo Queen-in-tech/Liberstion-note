@@ -128,7 +128,7 @@ const Comments = () => {
         <div className='flex flex-col gap-2 overflow-y-scroll pt-3 pb-16'>
         {comments.sort((a, b) => b.time - a.time).map((comment, index) => (
             <div className='bg-dGreen md:bg-white p-3 rounded-md flex gap-2 items-start' key={index}>
-                {comment.displayPhoto ? <img src={comment.displayPhoto} alt="user dp" className='w-8 h-8 rounded-full' /> : <CgProfile className="w-8 h-8 rounded-full mr-1 text-dBlue "></CgProfile>} 
+                {comment.displayPhoto ? <img src={comment.displayPhoto} alt="user dp" className='w-8 h-8 rounded-full object-cover' /> : <CgProfile className="w-8 h-8 rounded-full mr-1 text-dBlue "></CgProfile>} 
                 <div className='flex flex-col gap-1 w-[80%] text-dBlue md:text-black'>
                   <div className='flex gap-2 items-center'>
                 <p className='text-sm capitalize'>{comment.username}</p><span className="text-[13px]">
@@ -145,7 +145,7 @@ const Comments = () => {
         </div>
 
       <div className='flex bg-white rounded-lg px-2 py-1 items-center absolute bottom-0 right-0 left-0 border-1 border-dBlue md:border-none'>
-      {user.photoURL ? <img src={user.photoURL} alt="user dp" className='w-8 h-8 rounded-full bg-white' /> : <CgProfile className="w-8 h-8 text-dBlue rounded-xl mr-1 md:text-black "></CgProfile>} 
+      {user.photoURL ? <img src={user.photoURL} alt="user dp" className='w-8 h-8 rounded-full bg-white object-cover' /> : <CgProfile className="w-8 h-8 text-dBlue rounded-xl mr-1 md:text-black "></CgProfile>} 
         <textarea cols={2} type="text" value={comment} onChange={(e) => setComment(e.target.value)} className='w-full pl-2 rounded-lg outline-none bg-gray-50'/>
         <button className='text-2xl text-dGreen' onClick={() => commentOnPost(currentPostComment)}><AiOutlineSend/></button>
       </div>
