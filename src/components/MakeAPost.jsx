@@ -127,6 +127,7 @@ const MakeAPost = () => {
             textRef.current.innerText = ""
             setPostText("")
             setImgUrl([])
+            setMakePostMobile(false)
           }
           }
          

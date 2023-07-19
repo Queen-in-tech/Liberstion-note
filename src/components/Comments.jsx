@@ -1,6 +1,6 @@
-import React, { useContext, useEffect, useLayoutEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import {AiOutlineSend} from "react-icons/ai"
-import { AuthContext } from '../../context'
+import { MsgContext } from '../../chatContext'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { auth, db } from '../utils/firebase'
 import { collection, collectionGroup, doc, getDoc, getDocs, onSnapshot, query, setDoc, updateDoc } from 'firebase/firestore'
@@ -11,7 +11,7 @@ import {AiOutlineArrowLeft} from 'react-icons/ai'
 
 const Comments = () => {
     const [comment, setComment] = useState("")
-    const {currentPostComment, currentPostIndex, setOpenComments} = useContext(AuthContext)
+    const {currentPostComment, currentPostIndex, setOpenComments} = useContext(MsgContext)
     const [user, loading] = useAuthState(auth)
     const [commentsData, setCommentsData] = useState([]);
     const [comments, setComments] = useState([])
@@ -69,9 +69,8 @@ const Comments = () => {
         const allPostComment = []
 
         commentsData.map((data) => {
-            if(data[currentPostComment.id]){
+            if(data[currentPostComment.id]) {
                 data[currentPostComment.id]["comment"].map((stuff) => {
-
                 allPostComment.push(stuff)
                 })
             }

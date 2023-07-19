@@ -14,7 +14,7 @@ const Login = () => {
   const navigation = useNavigate();
   const location = useLocation();
   const [user, loading] = useAuthState(auth);
-  const { state, dispatch} = useContext(AuthContext);
+  const { state, dispatch, moodOfTheDay} = useContext(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
 
   const redirectPath = location.state?.path || '/';
@@ -44,7 +44,6 @@ const Login = () => {
             })
           );
       }catch (error) {
-        console.log(error);
         if (error.code === 'auth/user-not-found') {
           dispatch({ type: 'wrongCredential', payload: 'Invalid email address. Please try again.' });
         }
@@ -67,9 +66,12 @@ const Login = () => {
   }
 
   useEffect(() => {
-    if(user){
+    if(user && moodOfTheDay !== ""){
       navigation(redirectPath, { replace: true })
-    } 
+    }
+    if(user && moodOfTheDay === ""){
+      navigation("/mood")
+    }
   }, [user])
 
   return (

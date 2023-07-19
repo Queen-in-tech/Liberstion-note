@@ -44,7 +44,7 @@ const Activities = () => {
      <div className="text-2xl fixed right-5 bottom-5 z-20 p-4 bg-dGreen rounded-full text-white md:hidden" onClick={() => setMakePostMobile(true)}><AiOutlinePlus/></div>
 
      {makePostMobile && <div className="md:hidden fixed z-40 h-screen top-0 bottom-0 right-0 left-0 bg-white">
-      <MakeAPost/>
+      <MakeAPost />
      </div>}
 
     <div>

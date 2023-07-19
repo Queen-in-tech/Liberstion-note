@@ -9,13 +9,8 @@ import { VscColorMode } from 'react-icons/vsc';
 import { signOut } from "firebase/auth";
 
 
-import { AiOutlineDown } from 'react-icons/ai';
-import Dropdown from './Dropdown';
-
-
 const Nav = () => {
   const [user, loading] = useAuthState(auth)
-  const { dashboard, setDashboard } = useContext(AuthContext)
 
   return (
     <nav className="bg-transparent flex justify-between px-12 pt-3 md:pt-12">
@@ -26,8 +21,9 @@ const Nav = () => {
     <div className='hidden md:block'>
      {
       user ? <div className='text-[#292b4c] flex gap-1 mr-10 items-center justify-center'> 
-       <p className='capitalize z-60 hidden md:block'>Hi! {user.displayName}</p>
+       <p className='capitalize z-60 hidden md:block mr-1'>Hi! {user.displayName}</p>
         {user.photoURL ? <img src={user.photoURL} alt="user dp" className='w-8 h-8 rounded-full' /> : <CgProfile className="w-8 h-8"></CgProfile>}
+        <p className="ml-3 mr-1.5">|</p>
         <button onClick={() => {
         signOut(auth)}}>sign out</button>
       </div> :
