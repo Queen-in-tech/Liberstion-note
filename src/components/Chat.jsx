@@ -7,6 +7,7 @@ import {BsThreeDots} from "react-icons/bs"
 import  Picker  from "@emoji-mart/react";
 import { BiImageAdd } from "react-icons/bi"
 import { VscSmiley } from "react-icons/vsc"
+import {CgProfile} from "react-icons/cg"
 
 const Chat = ({otherUser, setStartChat, roomId}) => {
   const [user, loading] = useAuthState(auth)
@@ -125,6 +126,12 @@ const Chat = ({otherUser, setStartChat, roomId}) => {
         
     }
 
+    useEffect(() => {
+        if(messageInput){
+        textRef.current.focus()
+    }
+    }, [messageInput])
+
     useLayoutEffect(() => {
         scrollRef.current?.scrollIntoView({ behavior: "smooth" });
       }, [messageData]);
@@ -136,7 +143,7 @@ const Chat = ({otherUser, setStartChat, roomId}) => {
              <AiOutlineArrowLeft className='text-lg text-white' onClick={() => setStartChat(false)}/>
 
             <div className="flex flex-col gap-1 justify-center items-center">
-                <img src={otherPhoto} alt="" className="h-8 w-8 rounded-full"/>
+                {otherPhoto ? <img src={otherPhoto} alt="user dp" className='w-8 h-8 rounded-full object-cover'/> : <CgProfile className="w-8 h-8"></CgProfile>}
                 <p className="text-white font-semibold text-lg capitalize">{otherUserName}</p>
             </div>
 
@@ -155,7 +162,6 @@ const Chat = ({otherUser, setStartChat, roomId}) => {
         <div className="flex flex-col gap-2 absolute bottom-2 right-2 left-2 z-20 bg-white/30  rounded-xl py-2 pb-4 px-2">
         {messageInput && <div contentEditable="true" 
             spellCheck="true" 
-            autoFocus={true}
             className="outline-none break-words text-white" 
             ref={textRef}
             onInput={handleInput}

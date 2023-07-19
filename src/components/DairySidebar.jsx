@@ -5,6 +5,7 @@ import {MdOutlineExplore, MdOutlineDeveloperBoard} from "react-icons/md"
 import {AiOutlineCalendar} from "react-icons/ai"
 import {AiOutlineHome} from "react-icons/ai"
 import {AiOutlineMail, AiOutlineBell} from "react-icons/ai"
+import {CgProfile} from "react-icons/cg"
 import {BiExit} from "react-icons/bi"
 import { Link, useLocation } from "react-router-dom"
 import { signOut } from "firebase/auth";
@@ -53,18 +54,13 @@ const DairySidebar = () => {
      </div>
 
        <Link to="/dashboard" className={`p-3 text-white font-light flex gap-2 items-center  hover:shadow-xl ${location.pathname === "/dashboard" ? "border-[#ffff76] border-l-[6px] shadow-xl": ""} `}>
-       <IoMdSpeedometer className="text-2xl md:text-xl"/>
+       <CgProfile className="text-2xl md:text-xl"/>
        <span className="hidden md:block">Dashboard</span>
        </Link> 
 
        <Link className={`p-3 text-white font-light flex gap-2 items-center  hover:shadow-xl ${location.pathname === "/moodboard" ? "border-[#ffff76] border-l-[6px] shadow-xl": ""} `}>
        <MdOutlineDeveloperBoard className="text-2xl md:text-xl"/>
        <span className="hidden md:block">Moodboard</span>
-       </Link> 
-
-       <Link className={`p-3 text-white font-light flex gap-2 items-center  hover:shadow-xl ${location.pathname === "/explore" ? "border-[#ffff76] border-l-[6px] shadow-xl": ""} `}>
-       <MdOutlineExplore className="text-2xl md:text-xl"/>
-       <span className="hidden md:block">Explore</span>
        </Link> 
 
        <button className={`p-3 text-white font-light flex gap-2 items-center  hover:shadow-xl ${location.pathname === "/explore" ? "border-[#ffff76] border-l-[6px] shadow-xl": ""} ` } onClick={() => {

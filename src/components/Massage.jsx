@@ -5,7 +5,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import Chat from './Chat';
 import { MsgContext } from '../../chatContext';
 import { AiOutlineArrowLeft } from 'react-icons/ai';
-
+import {CgProfile} from "react-icons/cg"
 
 const Massage = () => {
   const [searchInput, setSearchInput] = useState("")
@@ -139,7 +139,7 @@ const renderDateTime = (date) => {
       {
         userData && userData.map((user, index) => {
          return <div className='flex items-center gap-2 py-4' key={index} onClick={() => handleRooms(user.data(), user.id)}>
-            <img src={user.data().photoURL} alt="" className='w-8 h-8 rounded-full object-cover'/>
+            {user.data().photoURL ? <img src={user.data().photoURL} alt="user dp" className='w-8 h-8 rounded-full object-cover'/> : <CgProfile className="w-8 h-8"></CgProfile>}
             <p className="text-dBlue md:text-white font-semibold capitalize">{user.data().username}</p>
           </div>
         })
@@ -159,7 +159,7 @@ const renderDateTime = (date) => {
               setKey(key)
             }}>
             <div className="flex gap-2 items-center">
-            <img src={personPhoto} alt="" className='w-9 h-9 rounded-full object-cover'/>
+            {personPhoto ? <img src={personPhoto} alt="user dp" className='w-9 h-9 rounded-full object-cover'/> : <CgProfile className="w-8 h-8"></CgProfile>}
             <div>
             <p className="text-dBlue md:text-white capitalize flex-row items-center justify-between">{personName}</p>
             {doc.lastMessage && <p className="text-dBlue/50 md:text-white/80 text-sm">{doc.lastMessageBy === user.displayName ? "You:  " : ""}{doc.lastMessage}</p>}
