@@ -6,12 +6,10 @@
       "**/.*",
       "**/node_modules/**"
     ],
-    "hosting": {
-      "rewrites": [ {
-        "source": "**",
-        "destination": "/index.html"
-      } ]
-    }
+    "rewrites": [ {
+      "source": "**",
+      "destination": "/index.html"
+    } ]
   },
   "predeploy": "npm run build"
 }
