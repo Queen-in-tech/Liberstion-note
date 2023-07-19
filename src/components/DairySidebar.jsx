@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import SidebarCalender from "./SidebarCalender"
 import {IoMdSpeedometer} from "react-icons/io"
 import {MdOutlineExplore, MdOutlineDeveloperBoard} from "react-icons/md"
@@ -9,11 +9,12 @@ import {BiExit} from "react-icons/bi"
 import { Link, useLocation } from "react-router-dom"
 import { signOut } from "firebase/auth";
 import { auth } from "../utils/firebase";
-
+import { MsgContext } from "../../chatContext"
 
 
 const DairySidebar = () => {
     const [openCalender, setOpenCalender] = useState(false)
+    const {openMessage, setOpenMessage} = useContext(MsgContext)
     
     const location = useLocation();
 
@@ -39,7 +40,7 @@ const DairySidebar = () => {
        <span className="text-white hidden md:block">Calender</span>
        </div>
 
-       <Link className={`p-3 text-white font-light flex gap-2 items-center  hover:shadow-xl ${location.pathname === "" ? "border-[#ffff76] border-l-[6px] shadow-xl": ""} md:hidden`}>
+       <Link className={`p-3 text-white font-light flex gap-2 items-center  hover:shadow-xl ${openMessage ? "border-[#ffff76] border-l-[6px] shadow-xl": ""} md:hidden`} onClick={() => setOpenMessage(true)}>
        <AiOutlineMail className="text-2xl md:text-xl"/>
        </Link> 
 

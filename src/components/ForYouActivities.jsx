@@ -15,12 +15,14 @@ import  Picker  from "@emoji-mart/react";
 import Timeago from "react-timeago";
 import buildFormatter from 'react-timeago/lib/formatters/buildFormatter';
 import { AuthContext } from "../../context";
+import { MsgContext } from "../../chatContext";
 
 
 
 const ForYouActivities = () => {
   const [user, loading] = useAuthState(auth)
-  const {likePost, postLikedBy, setPostsData, postsData, setPostLikedBy, postLikedObj, handleOpenComment, getCommentLength} = useContext(AuthContext)
+  const {likePost, postLikedBy, setPostsData, postsData, setPostLikedBy, postLikedObj} = useContext(AuthContext)
+  const { handleOpenComment, getCommentLength} = useContext(MsgContext)
   const [editBox, setEditBox] = useState([])
   const [newText, setNewText] = useState("")
   const [showEmoji, setShowEmoji] = useState(false)

@@ -1,4 +1,4 @@
-import { auth } from "../utils/firebase";
+import { auth, db } from "../utils/firebase";
 import { useAuthState } from "react-firebase-hooks/auth"
 import { Link, useNavigate } from "react-router-dom"
 import { useEffect, useContext, useState, useRef } from "react";
@@ -10,6 +10,7 @@ import { CgProfile } from "react-icons/cg";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { collection, doc, getDoc, updateDoc } from "firebase/firestore";
 
 
 
@@ -38,14 +39,25 @@ const Dashboard = () => {
     }
   }
 
-  const handleUpdateProfile = () => {
+  const handleUpdateProfile = async () => {
     try {
       updateProfile(user, {
         displayName: `${name}`, photoURL: `${image}`
       }).then( () => 
         {setUpdate(false)
         toast.success('Profile updated successfully.')}
-      )
+      ).then( async () => {
+        const usersRef = doc(collection(db, "users"), user.uid)
+        const docData = await getDoc(usersRef)
+        if (docData.exists()) {
+          const existingData = docData.data();
+          await updateDoc(usersRef, {
+            ...existingData,
+            username: name,
+            photoURL: image
+          });
+        }
+    })  
     } catch (error) {
       toast.success('Profile updated was not successfull, Try again.')
     }   
@@ -70,7 +82,7 @@ const Dashboard = () => {
       <div className="flex justify-center items-center h-screen ">
         <div className="bg-white py-8 px-4 flex flex-col gap-6">
         <div className="flex flex-col gap-3">
-        <img src={image}/>
+        <img src={image} className="w-56 h-56 object-cover"/>
         <div className="flex flex-col">
             <label htmlFor="image">Image</label>
             <input type="file" id="image" ref={imgRef} className="border-2 border-black px-1 py-2 ml-2" onChange={handleImageUpload}/>

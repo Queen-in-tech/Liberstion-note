@@ -1,7 +1,7 @@
 import { AuthContext } from "../../context";
 import { auth, db } from "../utils/firebase";
 import { useAuthState } from "react-firebase-hooks/auth"
-import {useState, useContext, useRef, useEffect} from 'react'
+import {useState, useContext, useRef} from 'react'
 import { useNavigate } from "react-router-dom";
 import {MdOutlinePrivacyTip} from "react-icons/md"
 import {BiImageAdd} from "react-icons/bi"
@@ -9,7 +9,7 @@ import {FaTimes} from "react-icons/fa"
 import {VscSmiley} from "react-icons/vsc"
 import {AiOutlineDown} from "react-icons/ai"
 import { setDoc, getDoc, doc, collection, updateDoc, serverTimestamp } from "firebase/firestore";
-import { ref, uploadBytes, getDownloadURL, getStorage, deleteObject } from "firebase/storage";
+import { ref, uploadBytes, getDownloadURL, getStorage } from "firebase/storage";
 import { v4 as uuid } from 'uuid'
 import  Picker  from "@emoji-mart/react";
 
@@ -17,7 +17,6 @@ import  Picker  from "@emoji-mart/react";
 const MakeAPost = () => {
     const {moodOfTheDay, setMakePostMobile} = useContext(AuthContext)
   const [user, loading] = useAuthState(auth)
-    const navigate = useNavigate()
     const [postText, setPostText] = useState("")
     const [privacy, setPrivacy] = useState(false)
     const [privacySettings, setPrivacySettings] = useState("Everyone")

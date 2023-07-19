@@ -48,7 +48,7 @@ const Nav = () => {
      <h1 className='text-lg text-[#292b4c] font-extrabold'>Liberation Notes</h1>
      </Link>
      
-    {user && user.photoURL ? <img src={user.photoURL} alt="user dp" className='w-6 h-6 cursor-pointer rounded-full'/> : <CgProfile className="w-8 h-8 relative cursor-pointer"></CgProfile>}
+    {user && user.photoURL ? <img src={user.photoURL} alt="user dp" className='w-6 h-6 cursor-pointer rounded-full object-cover'/> : <CgProfile className="w-8 h-8 relative cursor-pointer"></CgProfile>}
      </div>
      </div>
     </nav>

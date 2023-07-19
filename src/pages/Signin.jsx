@@ -88,7 +88,8 @@ const Signin = () => {
     await setDoc(usersRef, {
       createdAccountOn: serverTimestamp(),
       username: user.displayName,
-      email: user.email
+      email: user.email,
+      photoURL: user.photoURL
     }).then(() => {
       console.log('User document created successfully!');
     }).catch((error) => {

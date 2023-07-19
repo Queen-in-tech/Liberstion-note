@@ -6,18 +6,20 @@ import {AiOutlineHeart, AiFillHeart, AiOutlineMail} from "react-icons/ai"
 import {GrEdit} from "react-icons/gr"
 import {MdDeleteOutline} from "react-icons/md"
 import {VscSmiley} from "react-icons/vsc"
-import { getDocs, getDoc, collection, query, onSnapshot, orderBy, doc, updateDoc, collectionGroup } from "firebase/firestore";
+import { getDocs, getDoc, collection, query, onSnapshot, orderBy, doc, updateDoc} from "firebase/firestore";
 import { useState, useEffect, useContext } from 'react';
-
 import Timeago from "react-timeago";
 import buildFormatter from 'react-timeago/lib/formatters/buildFormatter';
 import { AuthContext } from "../../context";
+import { MsgContext } from "../../chatContext";
+
 
 const OthersActivities = () => {
   const [user, loading] = useAuthState(auth)
   const [userIds, setUserIds] = useState([])
   const [userDetails, setUserDetails] = useState()
-  const {likePost, postLikedBy, setPostsData, postsData, postLikedObj, setPostLikedBy, handleOpenComment, getCommentLength} = useContext(AuthContext)
+  const {likePost, postLikedBy, setPostsData, postsData, postLikedObj, setPostLikedBy} = useContext(AuthContext)
+  const { handleOpenComment, getCommentLength} = useContext(MsgContext)
   const [editBox, setEditBox] = useState([])
   const [newText, setNewText] = useState("")
   const [postOptions, setPostOptions] = useState(-1);
@@ -120,10 +122,6 @@ const OthersActivities = () => {
     
 }, [user, ])
 
-
-
-
-
 const deletePost = async (post) => {
   const today = new Date(post.time.toDate())
   const revToday = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`
@@ -167,15 +165,16 @@ const editPost = async (post, index) => {
     }}
 }
 
+
+
   return (
     <div className='p-5 flex flex-col gap-3'> 
     {
       postsData.sort((a, b) => b.time - a.time).map((post, index) => {
         const postUser = userDetails && userDetails[post?.uid];
-
         return post.privacySettings === "Everyone" && <div className="flex flex-col md:block bg-white p-4 text-gray-500 text-sm rounded-xl md:shrink-0 relative" key={post.id}>
         <div className="flex gap-2 pb-5">
-        {userDetails && postUser.photoURL ? <img src={postUser.photoURL} alt="user dp" className='w-10 h-10 rounded-full bg-white' /> : <CgProfile className="w-8 h-8 rounded-xl mr-1"></CgProfile>} 
+        {userDetails && postUser.photoURL ? <img src={postUser.photoURL} alt="user dp" className='w-8 h-8 rounded-full bg-white object-cover' /> : <CgProfile className="w-8 h-8 rounded-xl mr-1"></CgProfile>} 
         
         <div className="mt-1 w-full">
         <div className=" flex justify-between">

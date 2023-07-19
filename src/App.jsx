@@ -7,6 +7,7 @@ import Dashboard from './pages/Dashboard'
 import Mood from './pages/Mood'
 import Signin from './pages/Signin'
 import { AuthProvider } from '../context'
+import { MsgProvider } from '../chatContext'
 import RequireAuth from './components/RequireAuth'
 import Dairy from './pages/Dairy'
 
@@ -14,6 +15,7 @@ function App() {
 
   return (
     <AuthProvider>
+    <MsgProvider>
     <Routes>
       <Route path='/' element={<Home/>}/>
       <Route path='login' element={<Login/>}/>
@@ -22,6 +24,7 @@ function App() {
       <Route path='mood' element={<RequireAuth><Mood/></RequireAuth>}/>
       <Route path='dairy' element={<RequireAuth><Dairy/></RequireAuth>}/>
     </Routes>
+    </MsgProvider>
     </AuthProvider>
   )
 }

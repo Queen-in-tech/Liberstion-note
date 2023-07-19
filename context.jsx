@@ -1,6 +1,6 @@
 import { useReducer, createContext } from "react";
-import { getDocs, getDoc, collection, query, onSnapshot, doc, setDoc, updateDoc, deleteDoc, collectionGroup, where } from "firebase/firestore";
-import { useState, useEffect, useContext } from 'react';
+import { getDocs, getDoc, collection, query, onSnapshot, doc, setDoc, updateDoc, deleteDoc, collectionGroup } from "firebase/firestore";
+import { useState, useEffect } from 'react';
 import { auth, db } from "./src/utils/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 
@@ -65,22 +65,6 @@ const AuthProvider = ({children}) => {
   const [postsData, setPostsData] = useState([])
   const [user, loading] = useAuthState(auth)
   const [makePostMobile, setMakePostMobile] = useState(false)
-  const [openComments, setOpenComments] = useState([])
-  const [currentPostComment, setCurrentPostComment] = useState({})
-  const [currentPostIndex, setCurrentPostIndex] = useState(0)
-  const [commentsData, setCommentsData] = useState([])
-
-
-  const handleOpenComment = (index, post) => {
-    setOpenComments((prevStatus) => {
-      const updatedState = [...prevStatus]
-      updatedState[index] = true;
-      return updatedState
-    })
-    setCurrentPostComment(post)
-    setCurrentPostIndex(index)
-  }
-
 
   useEffect(() => {
     const getPostLikedByUser = async () => {
@@ -199,59 +183,8 @@ const AuthProvider = ({children}) => {
       }
     } 
 
-    const getAllPostComment = async () => {
-      const allComments = query(collectionGroup(db, 'comments'))
-      const querySnapshot = await getDocs(allComments);
-      const postComment = []
-      querySnapshot.forEach((doc) => {
-        const commentData = doc.data()
-        const commentId = doc.id
-       postComment.push({[commentId]: commentData})
-      });
-    
-      const concatenatedComments = postComment.reduce((result, comment) => {
-        const commentId = Object.keys(comment)[0];
-        const commentData = comment[commentId];
-      
-        const existingEntry = result.find((entry) => Object.keys(entry)[0] === commentId);
-      
-        if (existingEntry) {
-          existingEntry[commentId].comment = existingEntry[commentId].comment.concat(commentData.comment);
-        } else {
-          result.push(comment);
-        }
-      
-        return result;
-      }, []);
-      setCommentsData(concatenatedComments);
-    }
-    
-    useEffect(() => {
-      const unsubscribe = onSnapshot(
-        query(collectionGroup(db, 'comments')),
-        (snapshot) => {
-          getAllPostComment();
-        }
-      );
-
-      getAllPostComment()
-
-    
-      return () => {
-        unsubscribe();
-      };
-    }, [])
-    
-    const getCommentLength = (id) => {
-      const commentEntry = commentsData.find(comment => comment[id]);
-      if (commentEntry) {
-        return commentEntry[id]["comment"].length;
-      }
-      return 0;
-    }
-
   return(
-    <AuthContext.Provider value={{state, dispatch, mood, setMood, moodColor, setMoodColor, moodOfTheDay, setMoodOfTheDay, allMoodOfDay, setAllMoodOfDay, likePost, allPostLiked, postLikedBy, setPostLikedBy, postLikedObj, setPostsData, postsData, makePostMobile, setMakePostMobile, openComments, setOpenComments, handleOpenComment, currentPostComment, currentPostIndex, getCommentLength}}>
+    <AuthContext.Provider value={{state, dispatch, mood, setMood, moodColor, setMoodColor, moodOfTheDay, setMoodOfTheDay, allMoodOfDay, setAllMoodOfDay, likePost, allPostLiked, postLikedBy, setPostLikedBy, postLikedObj, setPostsData, postsData, makePostMobile, setMakePostMobile}}>
         {children}
     </AuthContext.Provider>
   )
