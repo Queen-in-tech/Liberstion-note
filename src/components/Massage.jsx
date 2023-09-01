@@ -27,26 +27,34 @@ const Massage = () => {
   const [otherUser, setOtherUser] = useState("");
   const [key, setKey] = useState("");
   const { openMessage, setOpenMessage } = useContext(MsgContext);
+  const [startSearch, setStartSearch] = useState(false);
 
   const handleSearchUser = async (e) => {
-    if (searchInput === "") {
-      const q = query(
-        collection(db, "users"),
-        where("username", "==", `${searchInput}`)
-      );
+    if (e.key === "Enter") {
+      try {
+        const q = query(
+          collection(db, "users"),
+          where("username", "==", `${searchInput}`)
+        );
 
-      const querySnapshot = await getDocs(q);
-      const dataInArray = [];
-      querySnapshot.forEach((doc) => {
-        dataInArray.push(doc);
-      });
-      setUserData(dataInArray);
+        const querySnapshot = await getDocs(q);
+        const dataInArray = [];
+        querySnapshot.forEach((doc) => {
+          dataInArray.push(doc);
+        });
+        setUserData(dataInArray);
+        console.log(userData);
+      } catch (error) {
+        console.log(error);
+      }
 
       setSearchInput("");
+      setStartSearch(true);
     }
   };
 
   const handleRooms = async (searchedUser, userId) => {
+    setStartChat(false);
     setUserData([]);
     const roomID = user.uid > userId ? user.uid + userId : userId + user.uid;
     setKey(roomID);
@@ -132,6 +140,11 @@ const Massage = () => {
     }
   };
 
+  const refreshSearchState = (e) => {
+    setSearchInput(e.target.value);
+    setStartSearch(false);
+  };
+
   return (
     <div className="">
       <div className="flex justify-between items-center">
@@ -148,32 +161,40 @@ const Massage = () => {
           placeholder="Search User"
           className=" py-2 rounded-2xl bg-dBlue/30 md:bg-white/30 text-center w-full placeholder:text-dBlue md:placeholder:text-white placeholder:text-lg text-dBlue md:text-white my-2 outline-none"
           value={searchInput}
-          onChange={(e) => setSearchInput(e.target.value)}
+          onChange={(e) => refreshSearchState(e)}
         />
       </div>
 
-      {userData &&
-        userData.map((user, index) => {
-          return (
-            <div
-              className="flex items-center gap-2 py-4"
-              key={index}
-              onClick={() => handleRooms(user.data(), user.id)}>
-              {user.data().photoURL ? (
-                <img
-                  src={user.data().photoURL}
-                  alt="user dp"
-                  className="w-8 h-8 rounded-full object-cover"
-                />
-              ) : (
-                <CgProfile className="w-8 h-8"></CgProfile>
-              )}
-              <p className="text-dBlue md:text-white font-semibold capitalize">
-                {user.data().username}
-              </p>
-            </div>
-          );
-        })}
+      {startSearch &&
+        (userData.length > 0 ? (
+          userData.map((user, index) => {
+            return (
+              <div
+                className="flex items-center gap-2 py-4 cursor-pointer"
+                key={index}
+                onClick={() => handleRooms(user.data(), user.id)}>
+                {user.data().photoURL ? (
+                  <img
+                    src={user.data().photoURL}
+                    alt="user dp"
+                    className="w-8 h-8 rounded-full object-cover"
+                  />
+                ) : (
+                  <CgProfile className="w-8 h-8"></CgProfile>
+                )}
+                <p className="text-dBlue md:text-white font-semibold capitalize">
+                  {user.data().username}
+                </p>
+              </div>
+            );
+          })
+        ) : (
+          <div className="mt-3 text-dBlue md:text-white font-semibold capitalize">
+            {" "}
+            Not found{" "}
+          </div>
+        ))}
+
       {chatList ? (
         <div className="py-3 flex flex-col gap-4">
           {chatList

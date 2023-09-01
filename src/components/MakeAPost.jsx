@@ -94,7 +94,7 @@ const MakeAPost = () => {
           {
             postText,
             time,
-            moodAsAtPost: moodOfTheDay,
+            moodAsAtPost: mood,
             privacySettings,
             uid: user.uid,
             id,
@@ -110,7 +110,7 @@ const MakeAPost = () => {
             {
               postText,
               time,
-              moodAsAtPost: moodOfTheDay,
+              moodAsAtPost: mood,
               privacySettings,
               uid: user.uid,
               id,
